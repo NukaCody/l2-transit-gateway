@@ -1,17 +1,17 @@
 import '@aws-cdk/assert/jest';
-import * as cdk from 'aws-cdk-lib';
-import * as ec2 from 'aws-cdk-lib/aws-ec2';
+import { Stack } from 'aws-cdk-lib';
+import { SubnetType, Vpc } from 'aws-cdk-lib/aws-ec2';
 import { TransitGateway, TransitGatewayAttachment, TransitGatewayRoute, TransitGatewayRouteTable } from '../src';
 
-let stack: cdk.Stack;
+let stack: Stack;
 let tgw: TransitGateway;
-let vpcB: ec2.Vpc;
+let vpcB: Vpc;
 
 beforeEach(() => {
-  stack = new cdk.Stack();
+  stack = new Stack();
   tgw = new TransitGateway(stack, 'TGW');
-  vpcB = new ec2.Vpc(stack, 'VPCB', {
-    subnetConfiguration: [{ name: 'PrivateIsolated', subnetType: ec2.SubnetType.PRIVATE_ISOLATED }],
+  vpcB = new Vpc(stack, 'VPCB', {
+    subnetConfiguration: [{ name: 'PrivateIsolated', subnetType: SubnetType.PRIVATE_ISOLATED }],
   });
 });
 
@@ -38,7 +38,7 @@ describe('transit-gateway-route', () => {
         transitGatewayRouteTable: new TransitGatewayRouteTable(stack, 'RT4', { transitGateway: tgw }),
         destinationCidrBlock: '0.0.0.0/0',
         transitGatewayAttachment: new TransitGatewayAttachment(stack, 'Attachment2', {
-          subnets: vpcB.selectSubnets({ subnetType: ec2.SubnetType.PRIVATE_ISOLATED }).subnets,
+          subnets: vpcB.selectSubnets({ subnetType: SubnetType.PRIVATE_ISOLATED }).subnets,
           transitGateway: tgw,
           vpc: vpcB,
         }),

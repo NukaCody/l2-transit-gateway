@@ -1,19 +1,19 @@
 /// !cdk-integ *
-import * as cdk from 'aws-cdk-lib';
-import * as ec2 from 'aws-cdk-lib/aws-ec2';
+import { App, Stack, StackProps } from 'aws-cdk-lib';
+import { SubnetType, Vpc } from 'aws-cdk-lib/aws-ec2';
 import { TGWFeature, TransitGateway } from '../src';
 
-const app = new cdk.App();
+const app = new App();
 
-class TestStack extends cdk.Stack {
-  constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
+class TestStack extends Stack {
+  constructor(scope: App, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const vpcA = new ec2.Vpc(this, 'VPCA', {
-      subnetConfiguration: [{ name: 'TGWSubnet', subnetType: ec2.SubnetType.PRIVATE_ISOLATED }],
+    const vpcA = new Vpc(this, 'VPCA', {
+      subnetConfiguration: [{ name: 'TGWSubnet', subnetType: SubnetType.PRIVATE_ISOLATED }],
     });
-    const vpcB = new ec2.Vpc(this, 'VPCB', {
-      subnetConfiguration: [{ name: 'TGWSubnet', subnetType: ec2.SubnetType.PRIVATE_ISOLATED }],
+    const vpcB = new Vpc(this, 'VPCB', {
+      subnetConfiguration: [{ name: 'TGWSubnet', subnetType: SubnetType.PRIVATE_ISOLATED }],
     });
 
     const tgw = new TransitGateway(this, 'TGW', {

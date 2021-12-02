@@ -1,19 +1,19 @@
 import '@aws-cdk/assert/jest';
-import * as cdk from 'aws-cdk-lib';
-import * as ec2 from 'aws-cdk-lib/aws-ec2';
+import { Stack, Tag } from 'aws-cdk-lib';
+import { SubnetType, Vpc } from 'aws-cdk-lib/aws-ec2';
 import { TransitGateway, TransitGatewayAttachment, TransitGatewayRouteTable, TransitGatewayRouteTableAssociation } from '../src';
 
-let stack: cdk.Stack;
+let stack: Stack;
 let tgw: TransitGateway;
-let vpcA: ec2.Vpc;
-let vpcB: ec2.Vpc;
+let vpcA: Vpc;
+let vpcB: Vpc;
 
 beforeEach(() => {
-  stack = new cdk.Stack();
-  vpcA = new ec2.Vpc(stack, 'VPCA');
+  stack = new Stack();
+  vpcA = new Vpc(stack, 'VPCA');
   tgw = new TransitGateway(stack, 'TGW');
-  vpcB = new ec2.Vpc(stack, 'VPCB', {
-    subnetConfiguration: [{ name: 'PrivateIsolated', subnetType: ec2.SubnetType.PRIVATE_ISOLATED }],
+  vpcB = new Vpc(stack, 'VPCB', {
+    subnetConfiguration: [{ name: 'PrivateIsolated', subnetType: SubnetType.PRIVATE_ISOLATED }],
   });
 });
 
@@ -23,13 +23,13 @@ describe('transit-gateway-route-table-association', () => {
     const samples = [
       {
         transitGatewayAttachment: new TransitGatewayAttachment(stack, 'Attachment1', {
-          subnets: vpcA.selectSubnets({ subnetType: ec2.SubnetType.PRIVATE_WITH_NAT }).subnets,
+          subnets: vpcA.selectSubnets({ subnetType: SubnetType.PRIVATE_WITH_NAT }).subnets,
           vpc: vpcA,
           transitGateway: tgw,
           name: 'AttachmentA',
           tags: [
-            new cdk.Tag('ExampleKeyA', 'ExampleValueA'),
-            new cdk.Tag('ExampleKeyB', 'ExampleValueB'),
+            new Tag('ExampleKeyA', 'ExampleValueA'),
+            new Tag('ExampleKeyB', 'ExampleValueB'),
           ],
         }),
         transitgatewayrouteTable: new TransitGatewayRouteTable(stack, 'RouteTable1', {
@@ -38,7 +38,7 @@ describe('transit-gateway-route-table-association', () => {
       },
       {
         transitGatewayAttachment: new TransitGatewayAttachment(stack, 'Attachment2', {
-          subnets: vpcB.selectSubnets({ subnetType: ec2.SubnetType.PRIVATE_ISOLATED }).subnets,
+          subnets: vpcB.selectSubnets({ subnetType: SubnetType.PRIVATE_ISOLATED }).subnets,
           transitGateway: tgw,
           vpc: vpcB,
         }),
