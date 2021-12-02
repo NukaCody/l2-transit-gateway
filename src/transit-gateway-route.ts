@@ -1,5 +1,6 @@
-import * as ec2 from '@aws-cdk/aws-ec2';
-import * as core from '@aws-cdk/core';
+import * as core from 'aws-cdk-lib';
+import * as ec2 from 'aws-cdk-lib/aws-ec2';
+import { Construct } from 'constructs';
 import { ITransitGatewayAttachment } from './transit-gateway-attachment';
 import { ITransitGatewayRouteTable } from './transit-gateway-route-table';
 
@@ -63,7 +64,7 @@ export interface TransitGatewayRouteProps {
 export class TransitGatewayRoute extends TransitGatewayRouteBase {
   public readonly transitGatewayRouteId: string;
 
-  constructor(scope: core.Construct, id: string, props: TransitGatewayRouteProps) {
+  constructor(scope: Construct, id: string, props: TransitGatewayRouteProps) {
     super(scope, id);
 
     if (props.transitGatewayAttachment === undefined && props.blackhole === undefined) {

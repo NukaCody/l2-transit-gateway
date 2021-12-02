@@ -1,5 +1,6 @@
-import * as ec2 from '@aws-cdk/aws-ec2';
-import * as core from '@aws-cdk/core';
+import * as core from 'aws-cdk-lib';
+import * as ec2 from 'aws-cdk-lib/aws-ec2';
+import { Construct } from 'constructs';
 import { TransitGatewayAttachment } from './transit-gateway-attachment';
 import { TransitGatewayRouteTable } from './transit-gateway-route-table';
 
@@ -126,7 +127,7 @@ export class TransitGateway extends TransitGatewayBase {
   public readonly transitGatewayId: string;
   public readonly transitGatewayArn: string;
 
-  constructor(scope: core.Construct, id: string, props: TransitGatewayProps = {}) {
+  constructor(scope: Construct, id: string, props: TransitGatewayProps = {}) {
     super(scope, id);
 
     const asn = props.asn ?? 64512;

@@ -1,15 +1,15 @@
 import '@aws-cdk/assert/jest';
-import * as ec2 from '@aws-cdk/aws-ec2';
-import * as core from '@aws-cdk/core';
+import * as cdk from 'aws-cdk-lib';
+import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import { TransitGateway, TransitGatewayAttachment } from '../src';
 
-let stack: core.Stack;
+let stack: cdk.Stack;
 let tgw: TransitGateway;
 let vpcA: ec2.Vpc;
 let vpcB: ec2.Vpc;
 
 beforeEach(() => {
-  stack = new core.Stack();
+  stack = new cdk.Stack();
   vpcA = new ec2.Vpc(stack, 'VPCA');
   tgw = new TransitGateway(stack, 'TGW');
   vpcB = new ec2.Vpc(stack, 'VPCB', {
@@ -26,8 +26,8 @@ describe('transit-gateway-attachment', () => {
         vpc: vpcA,
         name: 'AttachmentA',
         tags: [
-          new core.Tag('ExampleKeyA', 'ExampleValueA'),
-          new core.Tag('ExampleKeyB', 'ExampleValueB'),
+          new cdk.Tag('ExampleKeyA', 'ExampleValueA'),
+          new cdk.Tag('ExampleKeyB', 'ExampleValueB'),
         ],
       },
       {

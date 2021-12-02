@@ -1,5 +1,8 @@
-import * as ec2 from '@aws-cdk/aws-ec2';
-import * as core from '@aws-cdk/core';
+import * as core from 'aws-cdk-lib';
+import * as ec2 from 'aws-cdk-lib/aws-ec2';
+import { Construct } from 'constructs';
+
+
 import { ITransitGateway } from './transit-gateway';
 
 export interface ITransitGatewayAttachment extends core.IResource {
@@ -56,7 +59,7 @@ export interface TransitGatewayAttachmentProps {
 export class TransitGatewayAttachment extends TransitGatewayAttachmentBase {
   public readonly transitGatewayAttachmentId: string;
 
-  constructor(scope: core.Construct, id: string, props: TransitGatewayAttachmentProps) {
+  constructor(scope: Construct, id: string, props: TransitGatewayAttachmentProps) {
     super(scope, id);
 
     const resource = new ec2.CfnTransitGatewayAttachment(this, 'Resource', {
@@ -64,7 +67,7 @@ export class TransitGatewayAttachment extends TransitGatewayAttachmentBase {
       transitGatewayId: props.transitGateway.transitGatewayId,
       vpcId: props.vpc.vpcId,
       tags: [
-        { key: 'Name', value: props.name ?? this.node.addr },
+        { key: 'Name', value: props.name ?? this.physicalName },
         ...props.tags ?? [],
       ],
     });

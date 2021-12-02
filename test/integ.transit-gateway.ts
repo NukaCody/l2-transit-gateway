@@ -1,6 +1,6 @@
 /// !cdk-integ *
-import * as ec2 from '@aws-cdk/aws-ec2';
-import * as cdk from '@aws-cdk/core';
+import * as cdk from 'aws-cdk-lib';
+import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import { TGWFeature, TransitGateway } from '../src';
 
 const app = new cdk.App();

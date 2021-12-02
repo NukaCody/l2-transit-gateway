@@ -1,12 +1,12 @@
 import '@aws-cdk/assert/jest';
-import * as core from '@aws-cdk/core';
+import * as cdk from 'aws-cdk-lib';
 import { TransitGateway, TransitGatewayRouteTable } from '../src';
 
-let stack: core.Stack;
+let stack: cdk.Stack;
 let tgw: TransitGateway;
 
 beforeEach(() => {
-  stack = new core.Stack();
+  stack = new cdk.Stack();
   tgw = new TransitGateway(stack, 'TGW');
 });
 
@@ -18,8 +18,8 @@ describe('transit-gateway-route-table', () => {
         name: 'TGWRouteTable',
         transitGateway: tgw,
         tags: [
-          new core.Tag('ExampleKeyA', 'ExampleValueA'),
-          new core.Tag('ExampleKeyB', 'ExampleValueB'),
+          new cdk.Tag('ExampleKeyA', 'ExampleValueA'),
+          new cdk.Tag('ExampleKeyB', 'ExampleValueB'),
         ],
       },
 

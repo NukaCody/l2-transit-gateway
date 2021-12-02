@@ -1,11 +1,11 @@
 import '@aws-cdk/assert/jest';
-import * as core from '@aws-cdk/core';
+import * as cdk from 'aws-cdk-lib';
 import { TransitGateway } from '../src';
 
-let stack: core.Stack;
+let stack: cdk.Stack;
 
 beforeEach(() => {
-  stack = new core.Stack();
+  stack = new cdk.Stack();
 });
 
 describe('transit-gateway', () => {
